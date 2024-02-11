@@ -28,6 +28,11 @@
 
 
 ## FAQs
+
+### 0. Useful Link (Understanding Circle Structure)
+
+https://circle-rpi.readthedocs.io/
+
 ### 1. How do I run this sample in qemu?
 - First, install qemu on your computer.
 	- If you are using MacOS, follow [these instructions](https://www.qemu.org/download/#macos).
