@@ -24,7 +24,18 @@
 
 ## What to submit on ELMS before your lab in the week of Feb 25:
 1. The file `scheduler.cpp` in which you have modified the function `GetNextTask`.
-- Show running demo in lab session & Answer for a couple of questions
+
+2. A pdf file, which includes the following:
+	* Members of your group
+	* Screenshot(s) of your QEMU output showing priority scheduling with a description of task priorities, and how you tested your code. Include any edge cases (i.e. tasks with same priority)
+	* Answer the following questions in 2-3 sentences:
+		* What are the differences between kernel and user tasks?
+		* What is a scheduler?
+		* What exactly happens during the context switch?
+		* Describe your priority scheduling algorithm.
+		* Copy and paste your `GetNextTask` function at the end of the document
+
+
 
 
 ## FAQs
