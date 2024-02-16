@@ -1,4 +1,4 @@
-# ENEE447 2024 Spring Project 1
+# ENEE447 2024 Spring Project 1: Prioritize Scheduling Task
 
 ## What are we doing in this project
 - We will modify the scheduler in circle so that it implements priority scheduling.
