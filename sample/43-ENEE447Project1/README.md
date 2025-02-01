@@ -1,4 +1,4 @@
-# ENEE447 2024 Spring Project 1: Prioritize Scheduling Task
+# ENEE447 2025 Spring Project 1: Prioritize Scheduling Task
 
 ## What are we doing in this project
 - We will modify the scheduler in circle so that it implements priority scheduling.
@@ -22,46 +22,41 @@
 			- Moreover, when the `Run` function returns, meaning the task is done, [`TaskEntry` will clean up the task by setting its state to `TaskStateTerminated` and yield to next task](../..//lib/sched/task.cpp#L183-L185).
 	- [`Ctask`'s constructor will add the task to the scheduler](../..//lib/sched/task.cpp#L55) so that the task will be considered in future scheduling.
 
-## What to submit on ELMS before your lab in the week of Feb 25:
+## How to test your code?
+
+## Required Task
+
+
+**How to build modified raspberry pi OS**
+- kernel.img must be generated in the sample/43-ENEE447Project1 directory path.
+
+```bash
+# If you have modified source codes of the library (any code in lib or include)
+./makeall clean && ./makeall
+
+# If you have modified only codes in the sample but not in the library
+cd sample/43-ENEE447Project1
+make clean && make
+
+```
+
+**How to run on QEMU**
+```bash
+qemu-system-arm -M raspi0 -bios sample/43-ENEE447Project1/kernel.img
+```
+
+
+
+## Required Submission (Due Date : 3/2)
+
 1. The file `scheduler.cpp` in which you have modified the function `GetNextTask`.
-
-2. A pdf file, which includes the following:
+2. A pdf file, whicn includes the following:
 	* Members of your group
-	* Screenshot(s) of your QEMU output showing priority scheduling with a description of task priorities, and how you tested your code. Include any edge cases (i.e. tasks with same priority)
-	* Answer the following questions in 2-3 sentences:
-		* What are the differences between kernel and user tasks?
-		* What is a scheduler?
-		* What exactly happens during the context switch?
-		* Describe your priority scheduling algorithm.
-		* Copy and paste your `GetNextTask` function at the end of the document
+	* Screenshot(s) of your QEMU output showing priority scheduling with a description of task priorities, and how you correctly implement. 
+	* Describe your priority scheduling algorithm.
 
 
+### Useful Link
 
-
-## FAQs
-
-### 0. Useful Link (Understanding Circle Structure)
-
-https://circle-rpi.readthedocs.io/
-
-### 1. How do I run this sample in qemu?
-- First, install qemu on your computer.
-	- If you are using MacOS, follow [these instructions](https://www.qemu.org/download/#macos).
-	- If you are using Linux, follow [these instructions](https://www.qemu.org/download/#linux).
-	- If you are using Windows, follow [these instructions](https://www.qemu.org/download/#windows).
-- Then, type `qemu-system-arm --version` in your terminal to make sure it has been sucessfully installed.
-- Then, cd into the root directory of circle and type:
-	- `./configure --qemu -f`
-	- `./makeall clean && ./makeall`
-- You should have `sample/43-ENEE447Project1/kernel.img` generated if the compilation is successful.
-- Then, to run the generated kernel in qemu, type `qemu-system-arm -M raspi0 -bios sample/43-ENEE447Project1/kernel.img `
-	- A new Window should pop up which emulates the code running on Raspberry Pi Zero.
-
-### 2. How do I run this sample on my Raspberry Pi?
-- First, [follow these instructions to build a `kernel*.img` file for your version of Pi](https://github.com/sklaw/circle#building)
-- Then, [follow these instructions to copy firmware files and the `kernel*.img` file to your FAT-formatted SD card](https://github.com/sklaw/circle#installation).
-- Then, insert the SD card into your Pi, connect your Pi's HDMI port to a external monitor, then power on your Pi. 
-
-### 3. After I modify some codes, how do I compile and get the latest kernel?
-- If you have modified source codes of the library (any code in `lib` or `include`), run `./makeall clean && ./makeall`.
-- If you have modified _only_ codes in the sample but not in the library, run `cd sample/43-ENEE447Project1/`, then run `make clean && make`.
+* Understanding circle structure and functions provided in circle environment. 
+	* circle-rpi documentation: https://circle-rpi.readthedocs.io/
