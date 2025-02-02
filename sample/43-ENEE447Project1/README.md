@@ -1,31 +1,36 @@
 # ENEE447 2025 Spring Project 1: Prioritize Scheduling Task
 
-## What are we doing in this project
-- We will modify the scheduler in circle so that it implements priority scheduling.
-	- Currently, the scheduler is a ["cooperative non-preemtive scheduler that uses the round-robin policy, without priorities"](https://github.com/sklaw/circle/blob/master/include/circle/sched/scheduler.h#L31-L33).
-		- What is a cooperative non-preemtive scheduler? Read this wikipedia on [cooperative multitasking](https://en.wikipedia.org/wiki/Cooperative_multitasking).
-	- We want to modify it so that it will prioritize scheduling tasks with highest priority.
+## Purpose
 
-## How to test your solution 
-- **As an additional challenge in this project, you need to design a test for your implementation of priority scheduling.** (TAs will have some undisclosed tests for testing your code).
-- Hint: The test can be developed based on the codes we already have in this sample. Specifically, you can modify the `Run` functions of [CScreenTask](screentask.cpp#L34-L51)/[CPrimeTask](primetask.cpp#L42-L84)/[CLEDTask](ledtask.cpp#L32-L47), then [create them in kernel.cpp with different priorities](kernel.cpp#L84-L94), then run the sample, then check the output to see whether those tasks are run from high priority to low priority.
+In this project, you will understand how the current **cooperative non-preemptive scheduler** (round-robin without priority) works and modify it to implement **priority scheduling**, where tasks with higher priority are executed first.
 
-### How to "run" a task?
-- You may notice that every task defined here has a `Run` function, **does that mean we need to call a task's `Run` function ourselves to run the task? No.**
-- Here is how a task starts running:
-	- When we create an instance of a task, we will call `CTask`'s constructor because all tasks are subclasses of CTask. 
-		- For example, [`CScreenTask` inherits `CTask` and thus is a subclass of `CTask`](screentask.h#L26).
-	- [`CTask`'s constructor will call `InitializeRegs`](../../lib/sched/task.cpp#L48).
-		- [`InitializeRegs` will initialize a task's `lr` register to point to `TaskEntry`](../..//lib/sched/task.cpp#L148).
-			- **NOTE: This means when the scheduler schedules this task to run for the first time, the task will start running at `TaskEntry`.**
-		- When scheduled to run, [`TaskEntry` will call the task's `Run` function](../..//lib/sched/task.cpp#L181).
-			- Moreover, when the `Run` function returns, meaning the task is done, [`TaskEntry` will clean up the task by setting its state to `TaskStateTerminated` and yield to next task](../..//lib/sched/task.cpp#L183-L185).
-	- [`Ctask`'s constructor will add the task to the scheduler](../..//lib/sched/task.cpp#L55) so that the task will be considered in future scheduling.
+### Key Modifications
+- We will modify the scheduler in Circle to implement priority scheduling.
+  - Currently, the scheduler is a ["cooperative non-preemptive scheduler that uses the round-robin policy, without priorities"](https://github.com/sklaw/circle/blob/master/include/circle/sched/scheduler.h#L31-L33).
+    - What is a cooperative non-preemptive scheduler? Read this Wikipedia article on [cooperative multitasking](https://en.wikipedia.org/wiki/Cooperative_multitasking).
+  - We want to modify the scheduler so that it prioritizes tasks with the highest priority.
+
+### Priority Scheduling Rules
+1. **Higher priority tasks execute first.**
+2. **If tasks have the same priority, they execute in the following order:**
+   - `PrimeTask` → `LEDTask` → `ScreenTask`
+
+
+## Required Tasks
+
+### Understanding the System
+0. Familiarize yourself with how the operating system and application (`sample/43-ENEE447Project1`) work.
+
+### Implementation
+1. Modify the task scheduler so that higher-priority tasks execute first.
+2. Implement secondary prioritization:
+   - If multiple tasks have the same priority, execute them in the order:
+     - **PrimeTask** → **LEDTask** → **ScreenTask**
+3. Test your implementation:
+   - Modify the task order and priority of each tasks in `kernel.cpp`.
+
 
 ## How to test your code?
-
-## Required Task
-
 
 **How to build modified raspberry pi OS**
 - kernel.img must be generated in the sample/43-ENEE447Project1 directory path.
@@ -45,18 +50,19 @@ make clean && make
 qemu-system-arm -M raspi0 -bios sample/43-ENEE447Project1/kernel.img
 ```
 
-
-
 ## Required Submission (Due Date : 3/2)
 
-1. The file `scheduler.cpp` in which you have modified the function `GetNextTask`.
-2. A pdf file, whicn includes the following:
-	* Members of your group
-	* Screenshot(s) of your QEMU output showing priority scheduling with a description of task priorities, and how you correctly implement. 
-	* Describe your priority scheduling algorithm.
+Submit the following files:
 
+* Modified `scheduler.cpp` file, where you have updated the `GetNextTask` function.
+* A PDF file containing:
+	* Names of your group members.
+	* Description of how current scheduling works
+	* Screenshot(s) of your QEMU output demonstrating priority scheduling.
+	* Description of how you implemented priority scheduling.
+	* Answer to the Question: To block context switching, which line should be commented out in each task? Explain why.
 
 ### Useful Link
 
-* Understanding circle structure and functions provided in circle environment. 
+* Understanding circle structure and functions in circle environment. 
 	* circle-rpi documentation: https://circle-rpi.readthedocs.io/

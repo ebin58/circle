@@ -20,8 +20,13 @@
 #include "ledtask.h"
 #include <circle/sched/scheduler.h>
 
-CLEDTask::CLEDTask (CActLED *pActLED)
-:	m_pActLED (pActLED)
+// CLEDTask::CLEDTask (CActLED *pActLED)
+// :	m_pActLED (pActLED)
+// {
+// }
+
+CLEDTask::CLEDTask (CScreenDevice *pScreen)
+:	m_pScreen (pScreen)
 {
 }
 
@@ -33,12 +38,16 @@ void CLEDTask::Run (void)
 {
 	while (1)
 	{
-		for (unsigned i = 1; i <= 5; i++)
+		for (unsigned i = 1; i <= 2; i++)
 		{
-			m_pActLED->On ();
+			// m_pActLED->On ();
+			CString Message;
+			Message.Format ("LED BLINK %d times", i);
+			m_pScreen->Write (Message, Message.GetLength ());
+
 			CScheduler::Get ()->MsSleep (200);
 
-			m_pActLED->Off ();
+			// m_pActLED->Off ();
 			CScheduler::Get ()->MsSleep (200);
 		}
 

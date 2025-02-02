@@ -20,19 +20,22 @@
 #ifndef _ledtask_h
 #define _ledtask_h
 
-#include <circle/actled.h>
+// #include <circle/actled.h>
+#include <circle/screen.h>
 #include <circle/sched/task.h>
  
 class CLEDTask : public CTask
 {
 public:
-	CLEDTask (CActLED *pActLED);
+	// CLEDTask (CActLED *pActLED);
+	CLEDTask (CScreenDevice *pScreen);
 	~CLEDTask (void);
 
 	void Run (void);
 
 private:
-	CActLED *m_pActLED;
+	// CActLED *m_pActLED;
+	CScreenDevice *m_pScreen;
 };
 
 #endif
