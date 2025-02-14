@@ -42,7 +42,7 @@ void CLEDTask::Run (void)
 		{
 			// m_pActLED->On ();
 			CString Message;
-			Message.Format ("LED BLINK %d times", i);
+			Message.Format ("LED BLINK %d times\n", i);
 			m_pScreen->Write (Message, Message.GetLength ());
 
 			CScheduler::Get ()->MsSleep (200);
