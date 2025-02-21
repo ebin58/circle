@@ -84,14 +84,17 @@ TShutdownMode CKernel::Run (void)
 	for (unsigned nTaskID = 1; nTaskID <= 4; nTaskID++)
 	{
 		auto t = new CScreenTask (nTaskID, &m_Screen);
-		t->SetTaskPriority(30);
+		t->SetName("ScreenTask");
+		t->SetTaskPriority(30); //30
 	}
 
 	auto t = new CPrimeTask (&m_Screen);
-	t->SetTaskPriority(20);
+	t->SetName("PrimeTask");
+	t->SetTaskPriority(20); //20
 
 	auto t2 = new CLEDTask (&m_ActLED);
-	t2->SetTaskPriority(10);
+	t2->SetName("LEDTask");
+	t2->SetTaskPriority(10); //10
 
 	// the main task
 	while (1)
