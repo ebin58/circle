@@ -447,7 +447,7 @@ unsigned CScheduler::GetNextTask (void)
 		}
 	}
 
-	return MAX_TASKS;
+	return nextTask;
 }
 
 CScheduler *CScheduler::Get (void)
