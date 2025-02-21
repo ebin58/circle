@@ -371,16 +371,21 @@ void CScheduler::WakeTasks (CTask **ppWaitListHead)
 //  then returns the one with highest priority
 unsigned CScheduler::GetNextTask (void)
 {
-	unsigned nTask = m_nCurrent < MAX_TASKS ? m_nCurrent : 0;
+
+	// unsigned nTask = m_nCurrent < MAX_TASKS ? m_nCurrent : 0;
+	unsigned nTask = 0;
+	unsigned priTask = 0;
+	unsigned nextTask = MAX_TASKS;
 
 	unsigned nTicks = CTimer::Get ()->GetClockTicks ();
 
 	for (unsigned i = 1; i <= m_nTasks; i++)
 	{
-		if (++nTask >= m_nTasks)
-		{
-			nTask = 0;
-		}
+		// Makes the round robin style
+		// if (++nTask >= m_nTasks)
+		// {
+		// 	nTask = 0;
+		// }
 
 		CTask *pTask = m_pTask[nTask];
 		if (pTask == 0)
@@ -396,7 +401,14 @@ unsigned CScheduler::GetNextTask (void)
 		switch (pTask->GetState ())
 		{
 		case TaskStateReady:
-			return nTask;
+			// return nTask;
+			// Adding code here
+			if (pTask->GetTaskPriority() > priTask)  // Check priority
+                {
+                    priTask = pTask->GetTaskPriority();
+                    nextTask = nTask;
+                }
+            break;
 
 		case TaskStateBlocked:
 		case TaskStateNew:
